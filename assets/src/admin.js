@@ -24,10 +24,25 @@ const openlabNewsPanel = document.querySelector( '#openlab-news-panel' );
 const welcomePanel = document.querySelector( '#welcome-panel' );
 welcomePanel.after( openlabNewsPanel );
 
+// Add a Dismiss link to the panel.
+const openlabNewsPanelDismiss = document.createElement( 'a' );
+openlabNewsPanelDismiss.setAttribute( 'href', '#' );
+openlabNewsPanelDismiss.setAttribute( 'class', 'panel-dismiss' );
+openlabNewsPanelDismiss.textContent = __( 'Dismiss', 'openlab-announcements' );
+openlabNewsPanel.prepend( openlabNewsPanelDismiss );
+openlabNewsPanelDismiss.addEventListener( 'click', ( e ) => {
+	e.preventDefault();
+	openlabNewsPanelDismissHandler( false );
+} );
+
 // Hide OpenLab News panel if checkbox is checked.
-const openlabNewsPanelHide = document.querySelector( '#openlab_news_panel-hide' );
-openlabNewsPanelHide.addEventListener( 'change', () => {
-	if ( openlabNewsPanelHide.checked ) {
+const openlabNewsPanelShow = document.querySelector( '#openlab_news_panel-hide' );
+openlabNewsPanelShow.addEventListener( 'change', () => {
+	openlabNewsPanelDismissHandler( openlabNewsPanelShow.checked );
+} );
+
+const openlabNewsPanelDismissHandler = ( isVisible ) => {
+	if ( isVisible ) {
 		openlabNewsPanel.classList.remove( 'hidden' );
 	} else {
 		openlabNewsPanel.classList.add( 'hidden' );
@@ -36,7 +51,7 @@ openlabNewsPanelHide.addEventListener( 'change', () => {
 	// Send an AJAX request to save this setting.
 	const data = {
 		action: 'openlab_announcements_hide_panel',
-		visible: openlabNewsPanelHide.checked,
+		visible: isVisible,
 		nonce: document.getElementById( 'openlab-news-panel-nonce' ).value,
 	};
 
@@ -44,4 +59,4 @@ openlabNewsPanelHide.addEventListener( 'change', () => {
 		method: 'POST',
 		body: new URLSearchParams( data )
 	} );
-} );
+}
