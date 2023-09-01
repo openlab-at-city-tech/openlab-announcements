@@ -80,9 +80,8 @@ class Admin {
 			'before'
 		);
 
-
-		$can_customize           = current_user_can( 'customize' );
-		$is_block_theme          = wp_is_block_theme();
+		$can_customize  = current_user_can( 'customize' );
+		$is_block_theme = wp_is_block_theme();
 
 		$hidden_class = $panel_is_visible ? '' : ' hidden';
 		?>
@@ -96,6 +95,7 @@ class Admin {
 				</div>
 			</div>
 
+			<?php // phpcs:disable ?>
 			<div class="panel-column-container">
 				<div class="panel-column">
 					<div class="welcome-panel-column-content">
@@ -132,6 +132,7 @@ class Admin {
 					</div>
 				</div>
 			</div>
+			<?php // phpcs:enable ?>
 
 			<?php wp_nonce_field( 'openlab-news-panel-nonce', 'openlab-news-panel-nonce', false ); ?>
 		</div>
