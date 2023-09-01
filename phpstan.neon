@@ -1,0 +1,12 @@
+parameters:
+  level: 9
+
+  paths:
+    - .
+
+  bootstrapFiles:
+    - constants.php
+
+  excludePaths:
+    - ./vendor/
+    - ./node_modules/

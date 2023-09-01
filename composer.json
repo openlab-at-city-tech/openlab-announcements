@@ -1,0 +1,30 @@
+{
+    "name": "openlab-at-city-tech/openlab-announcements",
+    "description": "A WordPress plugin to display announcements on the OpenLab.",
+    "type": "project",
+    "require-dev": {
+        "wp-coding-standards/wpcs": "^3.0",
+        "phpstan/phpstan": "^1.10",
+        "szepeviktor/phpstan-wordpress": "^1.3",
+        "phpstan/extension-installer": "^1.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+    },
+    "license": "GPLv3",
+    "autoload": {
+        "psr-4": {
+            "OpenLab\\Announcements\\": "classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Boone B Gorges",
+            "email": "boonebgorges@gmail.com"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
+    }
+}
