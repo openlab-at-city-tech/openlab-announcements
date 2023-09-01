@@ -1,0 +1,12 @@
+{
+	"name": "openlab-announcements",
+	"version": "1.0.0",
+	"devDependencies": {
+		"@wordpress/eslint-plugin": "^15.1.0",
+		"@wordpress/scripts": "^26.12.0"
+	},
+	"scripts": {
+		"build": "wp-scripts build assets/src/admin.js",
+		"start": "wp-scripts start assets/src/admin.js"
+	}
+}

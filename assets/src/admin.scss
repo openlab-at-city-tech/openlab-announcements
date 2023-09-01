@@ -1,0 +1,52 @@
+.openlab-news-panel-content {
+	background: #fff;
+
+	.panel-header {
+		background: #63e0d2;
+		background-image: url(../img/OL_TealBubbles.png);
+		background-repeat: no-repeat;
+		background-position: left 30px center;
+		background-size: auto 160px;
+		color: #000;
+		height: 210px;
+		padding: 15px 25px 15px 200px;
+
+		.very-bold {
+			font-weight: 900;
+		}
+
+		h2 {
+			font-size: 3.5em;
+			margin: 0;
+			padding-top: 50px;
+		}
+
+		a {
+			color: #000;
+		}
+
+		p {
+			font-size: 1.2em;
+		}
+
+		.panel-header-content {
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+			height: 100%;
+			justify-content: center;
+		}
+	}
+
+	.panel-column-container {
+		display: flex;
+		flex-direction: row;
+		gap: 25px;
+		padding: 25px;
+
+		.panel-column {
+			flex: 0 0 33.333333%;
+		}
+	}
+
+}
