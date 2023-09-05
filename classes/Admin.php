@@ -64,10 +64,7 @@ class Admin {
 			OPENLAB_ANNOUNCEMENTS_VERSION
 		);
 
-		$panel_is_visible = get_user_meta( get_current_user_id(), 'openlab_show_news_panel', true );
-		if ( '' === $panel_is_visible ) {
-			$panel_is_visible = 1;
-		}
+		$panel_is_visible = $this->is_panel_visible_for_user();
 
 		wp_add_inline_script(
 			'openlab-announcements-admin',
@@ -139,6 +136,63 @@ class Admin {
 	}
 
 	/**
+	 * Gets a list of site users for whom the news panel is hidden.
+	 *
+	 * @param int $site_id Optional. Site ID. Defaults to current site.
+	 * @return int[]
+	 */
+	public function get_hidden_users( $site_id = 0 ) {
+		$site_hidden_users = get_blog_option( $site_id, 'openlab_announcements_hidden_users', [] );
+		if ( ! is_array( $site_hidden_users ) ) {
+			$site_hidden_users = [];
+		}
+
+		$site_hidden_users = array_map( 'intval', $site_hidden_users );
+
+		return $site_hidden_users;
+	}
+
+	/**
+	 * Determines whether the news panel should be visible for the current user.
+	 *
+	 * @param int $user_id Optional. User ID. Defaults to current user.
+	 * @param int $site_id Optional. Site ID. Defaults to current site.
+	 * @return bool
+	 */
+	public function is_panel_visible_for_user( $user_id = 0, $site_id = 0 ) {
+		if ( ! $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		if ( ! $site_id ) {
+			$site_id = get_current_blog_id();
+		}
+
+		$panel_is_visible = ! in_array( $user_id, $this->get_hidden_users(), true );
+
+		return (bool) $panel_is_visible;
+	}
+
+	/**
+	 * Sets whether the news panel should be visible for the current user.
+	 *
+	 * @param int  $user_id Optional. User ID. Defaults to current user.
+	 * @param bool $visible Optional. Whether the panel should be visible. Defaults to true.
+	 * @return void
+	 */
+	public function set_is_panel_visible_for_user( $user_id = 0, $visible = true ) {
+		$site_hidden_users = $this->get_hidden_users();
+
+		if ( $visible ) {
+			$site_hidden_users = array_diff( $site_hidden_users, [ $user_id ] );
+		} else {
+			$site_hidden_users[] = $user_id;
+		}
+
+		update_blog_option( get_current_blog_id(), 'openlab_announcements_hidden_users', $site_hidden_users );
+	}
+
+	/**
 	 * AJAX callback to hide the news panel.
 	 *
 	 * @return void
@@ -148,6 +202,6 @@ class Admin {
 
 		$visible = isset( $_POST['visible'] ) && 'false' === $_POST['visible'] ? 0 : 1;
 
-		update_user_meta( get_current_user_id(), 'openlab_show_news_panel', $visible );
+		$this->set_is_panel_visible_for_user( get_current_user_id(), (bool) $visible );
 	}
 }
