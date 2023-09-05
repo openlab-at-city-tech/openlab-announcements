@@ -89,7 +89,7 @@ class Admin {
 				<div class="panel-header-content">
 					<h2><span class="very-bold">OPEN</span>LAB News!</h2>
 					<p>
-						<a href="<?php echo esc_url( admin_url( 'about.php' ) ); ?>">Learn more about the OpenLab</a>
+						<a href="https://openlab.citytech.cuny.edu/about/">Learn more about the OpenLab</a>
 					</p>
 				</div>
 			</div>
