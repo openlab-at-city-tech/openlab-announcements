@@ -80,6 +80,9 @@ class Admin {
 		$is_block_theme = wp_is_block_theme();
 
 		$hidden_class = $panel_is_visible ? '' : ' hidden';
+
+		$announcements = $this->get_announcements();
+
 		?>
 		<div id="openlab-news-panel" class="openlab-news-panel-content <?php echo esc_attr( $hidden_class ); ?>">
 			<div class="panel-header">
@@ -93,40 +96,19 @@ class Admin {
 
 			<?php // phpcs:disable ?>
 			<div class="panel-column-container">
-				<div class="panel-column">
-					<div class="welcome-panel-column-content">
-						<h3><?php _e( 'Author rich content with blocks and patterns' ); ?></h3>
-						<p><?php _e( 'Block patterns are pre-configured block layouts. Use them to get inspired or create new pages in a flash.' ); ?></p>
-						<a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page' ) ); ?>"><?php _e( 'Add a new page' ); ?></a>
+				<?php foreach ( $announcements as $announcement ) : ?>
+					<div class="panel-column">
+						<div class="panel-icon">
+							<i class="fa <?php echo esc_attr( $announcement->get( 'icon' ) ); ?>"></i>
+						</div>
+
+						<div class="welcome-panel-column-content">
+							<h3><?php echo esc_html( $announcement->get( 'heading' ) ); ?></h3>
+							<p><?php echo esc_html( $announcement->get( 'content' ) ); ?></p>
+							<a href="<?php echo esc_url( $announcement->get( 'link_url' ) ); ?>"><?php echo esc_html( $announcement->get( 'link_text' ) ); ?></a>
+						</div>
 					</div>
-				</div>
-				<div class="panel-column">
-					<div class="welcome-panel-column-content">
-					<?php if ( $is_block_theme ) : ?>
-						<h3><?php _e( 'Customize your entire site with block themes' ); ?></h3>
-						<p><?php _e( 'Design everything on your site &#8212; from the header down to the footer, all using blocks and patterns.' ); ?></p>
-						<a href="<?php echo esc_url( admin_url( 'site-editor.php' ) ); ?>"><?php _e( 'Open site editor' ); ?></a>
-					<?php else : ?>
-						<h3><?php _e( 'Start Customizing' ); ?></h3>
-						<p><?php _e( 'Configure your site&#8217;s logo, header, menus, and more in the Customizer.' ); ?></p>
-						<?php if ( $can_customize ) : ?>
-							<a class="load-customize hide-if-no-customize" href="<?php echo wp_customize_url(); ?>"><?php _e( 'Open the Customizer' ); ?></a>
-						<?php endif; ?>
-					<?php endif; ?>
-					</div>
-				</div>
-				<div class="panel-column">
-					<div class="welcome-panel-column-content">
-					<?php if ( $is_block_theme ) : ?>
-						<h3><?php _e( 'Switch up your site&#8217;s look & feel with Styles' ); ?></h3>
-						<p><?php _e( 'Tweak your site, or give it a whole new look! Get creative &#8212; how about a new color palette or font?' ); ?></p>
-					<?php else : ?>
-						<h3><?php _e( 'Discover a new way to build your site.' ); ?></h3>
-						<p><?php _e( 'There is a new kind of WordPress theme, called a block theme, that lets you build the site you&#8217;ve always wanted &#8212; with blocks and styles.' ); ?></p>
-						<a href="<?php echo esc_url( __( 'https://wordpress.org/documentation/article/block-themes/' ) ); ?>"><?php _e( 'Learn about block themes' ); ?></a>
-					<?php endif; ?>
-					</div>
-				</div>
+				<?php endforeach; ?>
 			</div>
 			<?php // phpcs:enable ?>
 
@@ -203,5 +185,48 @@ class Admin {
 		$visible = isset( $_POST['visible'] ) && 'false' === $_POST['visible'] ? 0 : 1;
 
 		$this->set_is_panel_visible_for_user( get_current_user_id(), (bool) $visible );
+	}
+
+	/**
+	 * Gets a list of announcements to display in the Dashboard panel.
+	 *
+	 * @return DashboardAnnouncement[]
+	 */
+	public function get_announcements() {
+		$announcements_data = [
+			[
+				'heading'   => 'Accessibility',
+				'content'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+				'link_text' => 'Lorem Ipsum',
+				'link_url'  => 'https://openlab.citytech.cuny.edu/',
+				'icon'      => 'fa-universal-access',
+			],
+			[
+				'heading'   => 'New Feature: Templates',
+				'content'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+				'link_text' => 'Lorem Ipsum',
+				'link_url'  => 'https://openlab.citytech.cuny.edu/',
+				'icon'      => 'fa-check-circle-o',
+			],
+			[
+				'heading'   => 'Help & Support',
+				'content'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+				'link_text' => 'Lorem Ipsum',
+				'link_url'  => 'https://openlab.citytech.cuny.edu/',
+				'icon'      => 'fa-question-circle-o',
+			],
+		];
+
+		$announcements = array_map(
+			function ( $data ) {
+				$announcement = new DashboardAnnouncement();
+				$announcement->fill_announcement_data( $data );
+
+				return $announcement;
+			},
+			$announcements_data
+		);
+
+		return $announcements;
 	}
 }
