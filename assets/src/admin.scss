@@ -12,12 +12,20 @@
 		height: 210px;
 		padding: 15px 25px 15px 200px;
 
+		@media (max-width: 782px) {
+			background-position: left 25px top 25px;
+			background-size: 100px auto;
+			height: auto;
+			padding: 110px 25px 15px 25px;
+		}
+
 		.very-bold {
 			font-weight: 900;
 		}
 
 		h2 {
 			font-size: 3.5em;
+			line-height: 1.2em;
 			margin: 0;
 			padding-top: 50px;
 		}
@@ -44,6 +52,10 @@
 		flex-direction: row;
 		gap: 25px;
 		padding: 35px 25px 60px;
+
+		@media (max-width: 782px) {
+			flex-direction: column;
+		}
 
 		.panel-column {
 			display: flex;
