@@ -39,7 +39,7 @@ class Admin {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'welcome_panel', [ $this, 'news_panel' ], 20 );
+		add_action( 'in_admin_footer', [ $this, 'news_panel' ], 20 );
 		add_action( 'wp_ajax_openlab_announcements_hide_panel', [ $this, 'hide_panel_ajax_cb' ] );
 	}
 
