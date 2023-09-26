@@ -17,12 +17,17 @@ checkboxLabelEl.textContent = __( 'OpenLab News', 'openlab-announcements' );
 checkboxLabelEl.prepend( checkboxEl );
 
 const wpWelcomePanelHide = document.querySelector( 'label[for="wp_welcome_panel-hide"]' );
-wpWelcomePanelHide.after( checkboxLabelEl );
+if ( wpWelcomePanelHide ) {
+	wpWelcomePanelHide.after( checkboxLabelEl );
+} else {
+	const metaboxPrefs = document.querySelector( '#screen-options-wrap .metabox-prefs' );
+	metaboxPrefs.append( checkboxLabelEl );
+}
 
-// Move the OpenLab News panel out of the #welcome-panel element.
+// The OpenLab News panel should appear just before #dashboard-widgets-wrap.
 const openlabNewsPanel = document.querySelector( '#openlab-news-panel' );
-const welcomePanel = document.querySelector( '#welcome-panel' );
-welcomePanel.after( openlabNewsPanel );
+const dashboardWidgetsWrap = document.querySelector( '#dashboard-widgets-wrap' );
+dashboardWidgetsWrap.before( openlabNewsPanel );
 
 // Add a Dismiss link to the panel.
 const openlabNewsPanelDismiss = document.createElement( 'a' );
