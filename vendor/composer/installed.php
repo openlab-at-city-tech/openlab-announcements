@@ -3,7 +3,7 @@
         'name' => 'openlab-at-city-tech/openlab-announcements',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '65b334db531851b2d37945f94772df385153a147',
+        'reference' => '538ba0c485735bfa2b59aacf4d953ca4673847b3',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'openlab-at-city-tech/openlab-announcements' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '65b334db531851b2d37945f94772df385153a147',
+            'reference' => '538ba0c485735bfa2b59aacf4d953ca4673847b3',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
