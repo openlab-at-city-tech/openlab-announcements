@@ -49,6 +49,13 @@ class Admin {
 	 * @return void
 	 */
 	public function news_panel() {
+		global $pagenow;
+
+		// Only enqueue on the main Dashboard page.
+		if ( 'index.php' !== $pagenow ) {
+			return;
+		}
+
 		wp_enqueue_script(
 			'openlab-announcements-admin',
 			OPENLAB_ANNOUNCEMENTS_PLUGIN_URL . 'build/admin.js',
