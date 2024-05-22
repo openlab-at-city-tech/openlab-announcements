@@ -10,3 +10,7 @@ parameters:
   excludePaths:
     - ./vendor/
     - ./node_modules/
+
+  ignoreErrors:
+    - # Can't easily scan BP
+      message: '#Function (bp_is_my_profile|bp_displayed_user_id) not found.#'
