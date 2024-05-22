@@ -30,7 +30,7 @@ class Data {
 				'content' => '<p>Here is a message about privacy.</p><p>Learn more about privacy.</p>',
 				'active'  => true,
 				'date'    => '2024-05-21',
-			]
+			],
 		];
 
 		foreach ( $data as $_data ) {
@@ -50,7 +50,7 @@ class Data {
 		$data = new self();
 
 		foreach ( $data->frontend_announcements as $announcement ) {
-			if ( $announcement->get( 'active' ) ) {
+			if ( $announcement->get_active() ) {
 				return $announcement;
 			}
 		}

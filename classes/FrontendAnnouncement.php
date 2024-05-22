@@ -38,12 +38,7 @@ class FrontendAnnouncement {
 	/**
 	 * Fills announcement data.
 	 *
-	 * @param array{
-	 *   id:string,
-	 *   content:string,
-	 *   active:bool,
-	 *   date:string
-	 * } $data Data to fill.
+	 * @param array{ id:string, content:string, active:bool, date:string } $data Data to fill.
 	 * @return void
 	 */
 	public function fill_announcement_data( array $data ) {
@@ -59,12 +54,38 @@ class FrontendAnnouncement {
 	}
 
 	/**
-	 * Gets announcement data.
+	 * Gets the announcement ID.
 	 *
-	 * @param string $key Key to retrieve.
-	 * @return mixed
+	 * @return string
 	 */
-	public function get( $key ) {
-		return isset( $this->data[ $key ] ) ? $this->data[ $key ] : '';
+	public function get_id() {
+		return $this->data['id'];
+	}
+
+	/**
+	 * Gets the announcement content.
+	 *
+	 * @return string
+	 */
+	public function get_content() {
+		return $this->data['content'];
+	}
+
+	/**
+	 * Gets the announcement active status.
+	 *
+	 * @return bool
+	 */
+	public function get_active() {
+		return $this->data['active'];
+	}
+
+	/**
+	 * Gets the announcement date.
+	 *
+	 * @return string
+	 */
+	public function get_date() {
+		return $this->data['date'];
 	}
 }

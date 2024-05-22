@@ -81,7 +81,7 @@ class Frontend {
 			return;
 		}
 
-		if ( $this->has_user_dismissed_announcement( $user_id, $currently_active_announcement->get( 'id' ) ) ) {
+		if ( $this->has_user_dismissed_announcement( $user_id, $currently_active_announcement->get_id() ) ) {
 			return;
 		}
 
@@ -90,19 +90,19 @@ class Frontend {
 
 		?>
 
-		<div class="openlab-tip" id="openlab-tip-<?php echo esc_attr( $currently_active_announcement->get( 'id' ) ); ?>">
+		<div class="openlab-tip" id="openlab-tip-<?php echo esc_attr( $currently_active_announcement->get_id() ); ?>">
 			<div class="openlab-tip-header">
 				<span class="fa fa-info-circle"></span>
 				<?php esc_html_e( 'OpenLab Tip', 'openlab-announcements' ); ?>
 
-				<button class="openlab-tip-close" data-announcement-id="<?php echo esc_attr( $currently_active_announcement->get( 'id' ) ); ?>">
+				<button class="openlab-tip-close" data-announcement-id="<?php echo esc_attr( $currently_active_announcement->get_id() ); ?>">
 					<span class="screen-reader-text"><?php esc_html_e( 'Close', 'openlab-announcements' ); ?></span>
 					<span class="fa fa-times" aria-hidden="true"></span>
 				</button>
 			</div>
 
 			<div class="openlab-tip-content">
-				<?php echo wp_kses_post( $currently_active_announcement->get( 'content' ) ); ?>
+				<?php echo wp_kses_post( $currently_active_announcement->get_content() ); ?>
 			</div>
 
 			<?php wp_nonce_field( 'openlab_announcements_hide_tip', 'openlab-tip-nonce' ); ?>
@@ -119,6 +119,8 @@ class Frontend {
 	 * @return bool
 	 */
 	public function has_user_dismissed_announcement( $user_id, $announcement_id ) {
+		// Super admins can ignore dismissed announcements.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( is_super_admin() && ! empty( $_GET['ignore_dismissed_announcements'] ) ) {
 			return false;
 		}
@@ -140,8 +142,12 @@ class Frontend {
 	public function hide_tip_ajax_cb() {
 		check_ajax_referer( 'openlab_announcements_hide_tip', 'nonce' );
 
+		if ( ! is_user_logged_in() || ! isset( $_POST['announcementId'] ) ) {
+			wp_send_json_error();
+		}
+
 		$user_id         = get_current_user_id();
-		$announcement_id = sanitize_text_field( $_POST['announcementId'] );
+		$announcement_id = sanitize_text_field( wp_unslash( $_POST['announcementId'] ) );
 
 		$dismissed_announcements = get_user_meta( $user_id, 'openlab_announcements_dismissed', true );
 
