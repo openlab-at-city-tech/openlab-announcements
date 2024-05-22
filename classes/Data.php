@@ -24,16 +24,21 @@ class Data {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->frontend_announcements = [
-			new FrontendAnnouncement(
-				[
-					'id'      => '20240521-privacy',
-					'content' => '<p>Here is a message about privacy.</p><p>Learn more about privacy.</p>',
-					'active'  => true,
-					'date'    => '2024-05-21',
-				]
-			),
+		$data = [
+			[
+				'id'      => '20240521-privacy',
+				'content' => '<p>Here is a message about privacy.</p><p>Learn more about privacy.</p>',
+				'active'  => true,
+				'date'    => '2024-05-21',
+			]
 		];
+
+		foreach ( $data as $_data ) {
+			$announcement = new FrontendAnnouncement();
+			$announcement->fill_announcement_data( $_data );
+
+			$this->frontend_announcements[] = $announcement;
+		}
 	}
 
 	/**
