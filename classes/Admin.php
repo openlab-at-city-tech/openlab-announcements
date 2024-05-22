@@ -39,7 +39,7 @@ class Admin {
 	 * @return void
 	 */
 	public function init() {
-		add_action( 'welcome_panel', [ $this, 'news_panel' ], 20 );
+		add_action( 'in_admin_footer', [ $this, 'news_panel' ], 20 );
 		add_action( 'wp_ajax_openlab_announcements_hide_panel', [ $this, 'hide_panel_ajax_cb' ] );
 	}
 
@@ -49,6 +49,13 @@ class Admin {
 	 * @return void
 	 */
 	public function news_panel() {
+		global $pagenow;
+
+		// Only enqueue on the main Dashboard page.
+		if ( 'index.php' !== $pagenow ) {
+			return;
+		}
+
 		wp_enqueue_script(
 			'openlab-announcements-admin',
 			OPENLAB_ANNOUNCEMENTS_PLUGIN_URL . 'build/admin.js',
@@ -104,8 +111,7 @@ class Admin {
 
 						<div class="welcome-panel-column-content">
 							<h3><?php echo esc_html( $announcement->get( 'heading' ) ); ?></h3>
-							<p><?php echo esc_html( $announcement->get( 'content' ) ); ?></p>
-							<a href="<?php echo esc_url( $announcement->get( 'link_url' ) ); ?>"><?php echo esc_html( $announcement->get( 'link_text' ) ); ?></a>
+							<?php echo wp_kses_post( $announcement->get( 'content' ) ); ?>
 						</div>
 					</div>
 				<?php endforeach; ?>
@@ -195,25 +201,19 @@ class Admin {
 	public function get_announcements() {
 		$announcements_data = [
 			[
-				'heading'   => 'Accessibility',
-				'content'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-				'link_text' => 'Lorem Ipsum',
-				'link_url'  => 'https://openlab.citytech.cuny.edu/',
-				'icon'      => 'fa-universal-access',
+				'heading' => 'Accessibility',
+				'content' => '<p>Make your work on the OpenLab accessible so it\'s easy for everyone to use and understand! Visit the <a href="https://openlab.citytech.cuny.edu/blog/help/help-category/accessibility-on-the-openlab/">Accessibility section</a> in OpenLab Help for step-by-step instructions, and <a href="https://openlab.citytech.cuny.edu/blog/help/editoria11y-accessibility-checker/">use the Editoria11y plugin</a> to check your site for accessibility.</p><p>Learn more in <a href="https://openlab.citytech.cuny.edu/blog/help/help-category/accessibility-on-the-openlab/">OpenLab Help</a>.',
+				'icon'    => 'fa-universal-access',
 			],
 			[
-				'heading'   => 'New Feature: Templates',
-				'content'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-				'link_text' => 'Lorem Ipsum',
-				'link_url'  => 'https://openlab.citytech.cuny.edu/',
-				'icon'      => 'fa-check-circle-o',
+				'heading' => 'New Feature: Add to Portfolio',
+				'content' => '<p>It\'s easy to add the work you do in Courses, Projects, or Clubs to your Portfolio! Simply enable the <a href="https://openlab.citytech.cuny.edu/blog/help/add-to-my-portfolio/">Add to Portfolio</a> button and, in one click, add the posts, comments, or pages you\'ve created on other sites to your Portfolio!</p><p>Learn more in <a href="https://openlab.citytech.cuny.edu/blog/help/add-to-my-portfolio/">OpenLab Help</a>.</p>',
+				'icon'    => 'fa-check-circle-o',
 			],
 			[
-				'heading'   => 'Help & Support',
-				'content'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-				'link_text' => 'Lorem Ipsum',
-				'link_url'  => 'https://openlab.citytech.cuny.edu/',
-				'icon'      => 'fa-question-circle-o',
+				'heading' => 'Help & Support',
+				'content' => '<p>We\'re here to help! Check out the <a href="https://openlab.citytech.cuny.edu/blog/help/">OpenLab Help section</a> for step-by-step instructions. Reach out for email support at OpenLab@CityTech.cuny.edu. Sign up for <a href="https://openlab.citytech.cuny.edu/openroad/office-hours/">Open Hours</a>, a 30-minute Zoom session with a member of the OpenLab team.</p><p>Learn more in <a href="https://openlab.citytech.cuny.edu/blog/help/">OpenLab Help</a> and the <a href="https://openlab.citytech.cuny.edu/openroad/support/">Open Road</a>.</p>',
+				'icon'    => 'fa-question-circle-o',
 			],
 		];
 

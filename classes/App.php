@@ -21,5 +21,8 @@ class App {
 			$admin = Admin::get_instance();
 			$admin->init();
 		}
+
+		$frontend = Frontend::get_instance();
+		$frontend->init();
 	}
 }
