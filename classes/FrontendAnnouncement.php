@@ -14,12 +14,17 @@ class FrontendAnnouncement {
 	/**
 	 * Announcement data.
 	 *
-	 * @var string[]
+	 * @var array{
+	 *   id:string,
+	 *   content:string,
+	 *   active:bool,
+	 *   date:string
+	 * }
 	 */
 	protected $data = [
 		'id'      => '',
 		'content' => '',
-		'active'  => '',
+		'active'  => false,
 		'date'    => '',
 	];
 
@@ -28,37 +33,59 @@ class FrontendAnnouncement {
 	 *
 	 * @return void
 	 */
-	public function __construct( $data = [] ) {
-		$this->fill_announcement_data( $data );
-	}
+	public function __construct() {}
 
 	/**
 	 * Fills announcement data.
 	 *
-	 * @param string[] $data {
-	 *   Announcement data.
-	 *   @type string $id      ID.
-	 *   @type string $content Content.
-	 *   @type bool   $active  Whether the announcement is active.
-	 *   @type string $date    Date.
-	 * }
+	 * @param array{ id:string, content:string, active:bool, date:string } $data Data to fill.
 	 * @return void
 	 */
 	public function fill_announcement_data( array $data ) {
 		foreach ( $data as $key => $value ) {
-			if ( isset( $this->data[ $key ] ) ) {
-				$this->data[ $key ] = $value;
+			switch ( $key ) {
+				case 'active':
+					$this->data[ $key ] = (bool) $value;
+					break;
+				default:
+					$this->data[ $key ] = (string) $value;
 			}
 		}
 	}
 
 	/**
-	 * Gets announcement data.
+	 * Gets the announcement ID.
 	 *
-	 * @param string $key Key to retrieve.
 	 * @return string
 	 */
-	public function get( $key ) {
-		return isset( $this->data[ $key ] ) ? $this->data[ $key ] : '';
+	public function get_id() {
+		return $this->data['id'];
+	}
+
+	/**
+	 * Gets the announcement content.
+	 *
+	 * @return string
+	 */
+	public function get_content() {
+		return $this->data['content'];
+	}
+
+	/**
+	 * Gets the announcement active status.
+	 *
+	 * @return bool
+	 */
+	public function get_active() {
+		return $this->data['active'];
+	}
+
+	/**
+	 * Gets the announcement date.
+	 *
+	 * @return string
+	 */
+	public function get_date() {
+		return $this->data['date'];
 	}
 }

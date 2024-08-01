@@ -2,6 +2,9 @@ name: PHP Coding Standards
 
 on:
   push:
+    branches:
+      - '*'
+      - '!build'
     paths:
       - '**.php'
       - '**.yml'

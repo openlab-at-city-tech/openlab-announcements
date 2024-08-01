@@ -24,16 +24,23 @@ class Data {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->frontend_announcements = [
-			new FrontendAnnouncement(
-				[
-					'id'      => '20240521-privacy',
-					'content' => '<p>Here is a message about privacy.</p><p>Learn more about privacy.</p>',
-					'active'  => true,
-					'date'    => '2024-05-21',
-				]
-			),
+		$data = [
+			[
+				'id'      => '20240801-user-profiles',
+				'content' => '<p>Click \'Edit Profile\' to check out the new privacy settings on your profile.</p>
+
+<p>Learn more about <a href="https://openlab.citytech.cuny.edu/blog/help/privacy-on-the-openlab/">privacy on the OpenLab</a> in OpenLab Help.</p>',
+				'active'  => true,
+				'date'    => '2024-08-01',
+			],
 		];
+
+		foreach ( $data as $_data ) {
+			$announcement = new FrontendAnnouncement();
+			$announcement->fill_announcement_data( $_data );
+
+			$this->frontend_announcements[] = $announcement;
+		}
 	}
 
 	/**
@@ -45,7 +52,7 @@ class Data {
 		$data = new self();
 
 		foreach ( $data->frontend_announcements as $announcement ) {
-			if ( $announcement->get( 'active' ) ) {
+			if ( $announcement->get_active() ) {
 				return $announcement;
 			}
 		}

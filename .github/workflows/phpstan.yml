@@ -2,6 +2,9 @@ name: PHPStan for OpenLab Modules
 
 on:
   push:
+    branches:
+      - '*'
+      - '!build'
     paths:
       - '**.php'
       - '**.yml'
