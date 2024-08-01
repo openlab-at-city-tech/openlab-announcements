@@ -206,8 +206,8 @@ class Admin {
 				'icon'    => 'fa-universal-access',
 			],
 			[
-				'heading' => 'New Feature: Add to Portfolio',
-				'content' => '<p>It\'s easy to add the work you do in Courses, Projects, or Clubs to your Portfolio! Simply enable the <a href="https://openlab.citytech.cuny.edu/blog/help/add-to-my-portfolio/">Add to Portfolio</a> button and, in one click, add the posts, comments, or pages you\'ve created on other sites to your Portfolio!</p><p>Learn more in <a href="https://openlab.citytech.cuny.edu/blog/help/add-to-my-portfolio/">OpenLab Help</a>.</p>',
+				'heading' => 'New Feature: More Privacy Options!',
+				'content' => '<p>If you\'re working in a public site, you can now make individual posts and pages private. Learn more about <a href="https://openlab.citytech.cuny.edu/blog/help/privacy-on-the-openlab/">privacy on the OpenLab</a> in OpenLab Help.</p>',
 				'icon'    => 'fa-check-circle-o',
 			],
 			[
